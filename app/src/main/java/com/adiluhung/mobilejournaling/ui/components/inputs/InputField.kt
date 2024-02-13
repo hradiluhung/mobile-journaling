@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -30,6 +31,7 @@ fun CustomTextField(
     label: String,
     placeHolder: String,
     value: String,
+    isRequired: Boolean = false,
     keyboardOptions: KeyboardOptions,
     onValueChange: (String) -> Unit,
     leadingIcon: (@Composable () -> Unit)? = null,
@@ -53,6 +55,16 @@ fun CustomTextField(
                 ),
                 modifier = Modifier.padding(end = 8.dp)
             )
+            if(isRequired){
+                  Text(
+                     text = "*",
+                     style = MaterialTheme.typography.bodyMedium.copy(
+                           color = Color.Red,
+                           fontWeight = FontWeight.Medium,
+                           fontSize = 14.sp
+                     ),
+                  )
+            }
         }
         OutlinedTextField(
             value = value,
@@ -69,6 +81,10 @@ fun CustomTextField(
                 focusedPlaceholderColor = Slate300,
                 focusedLabelColor = Sky900,
                 unfocusedLabelColor = Slate300,
+            ),
+            textStyle = MaterialTheme.typography.bodyMedium.copy(
+                fontSize = 16.sp,
+                lineHeight = 24.sp
             ),
             keyboardOptions = keyboardOptions,
             singleLine = true,

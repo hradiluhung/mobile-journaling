@@ -5,6 +5,15 @@
       <entry key="HomeScreenPreview">
         <State />
       </entry>
+      <entry key="ListFavoriteProgramScreenPreview">
+        <State />
+      </entry>
+      <entry key="MoodAddNoteScreenPreview">
+        <State />
+      </entry>
+      <entry key="ProfileScreenPreview">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>

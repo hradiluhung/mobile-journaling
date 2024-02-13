@@ -31,78 +31,92 @@ import com.adiluhung.mobilejournaling.ui.theme.Sky900
 
 @Composable
 fun StartScreen(navController: NavController) {
+   fun navigateToLogin() {
+      navController.navigate(Routes.Login.route)
+   }
 
-    fun navigateToLogin() {
-        navController.navigate(Routes.Login.route)
-    }
+   fun navigateToRegister() {
+      navController.navigate(Routes.Register.route)
+   }
 
-    fun navigateToRegister() {
-        navController.navigate(Routes.Register.route)
-    }
-
-    Box(
-        modifier = with(Modifier) {
-            fillMaxSize()
-                .paint(
-                    painterResource(id = R.drawable.screen_background),
-                    contentScale = ContentScale.FillBounds
-                )
-
-        })
-    {
-        Column(modifier = Modifier.padding(12.dp)) {
-            Text(
-                text = "Meditasi\nLebih Mudah",
-                style = MaterialTheme.typography.displaySmall.copy(
-                    color = Sky900
-                ),
-                modifier = Modifier.padding(bottom = 28.dp)
+   Box(
+      modifier = with(Modifier) {
+         fillMaxSize()
+            .paint(
+               painterResource(id = R.drawable.screen_background),
+               contentScale = ContentScale.FillBounds
             )
 
-            Text(
-                text = "Jelajahi keajaiban ketenangan batin\ndengan Meditasi",
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    color = Sky900
-                ),
-            )
+      })
+   {
+      Column(modifier = Modifier.padding(top = 64.dp, start = 12.dp, end = 12.dp, bottom = 12.dp)) {
+         Text(
+            text = "Meditasi\nLebih Mudah",
+            style = MaterialTheme.typography.displaySmall.copy(
+               color = Sky900,
+               fontWeight = FontWeight.Bold,
+               fontSize = 24.sp,
+               lineHeight = 30.sp
+            ),
+            modifier = Modifier.padding(bottom = 28.dp)
+         )
 
-            Column(
-                // align to bottom of screen
-                modifier = Modifier.fillMaxSize().padding(bottom=36.dp),
-                verticalArrangement = Arrangement.Bottom
+         Text(
+            text = "Jelajahi keajaiban ketenangan batin dengan Meditasi",
+            style = MaterialTheme.typography.bodyLarge.copy(
+               color = Sky900,
+               fontSize = 16.sp,
+               lineHeight = 24.sp
+            ),
+         )
+
+         Column(
+            modifier = Modifier
+               .fillMaxSize()
+               .padding(bottom = 36.dp),
+            verticalArrangement = Arrangement.Bottom
+         ) {
+            FilledButton(
+               modifier = Modifier.fillMaxWidth(),
+               text = "Daftar Sekarang",
+               onClick = { navigateToRegister() })
+            Row(
+               horizontalArrangement = Arrangement.Center, modifier = Modifier
+                  .fillMaxWidth()
+                  .padding(top = 8.dp, bottom = 8.dp)
             ) {
-                FilledButton(modifier = Modifier.fillMaxWidth(), text = "Daftar Sekarang", onClick = { navigateToRegister()})
-                Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp, bottom = 8.dp)) {
-                    Text(
-                        text = "Sudah punya akun?",
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = Sky900
-                        ),
-                    )
-                    ClickableText(
-                        text = AnnotatedString("Masuk"),
-                        modifier = Modifier.padding(start = 4.dp),
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = Sky900,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            textDecoration = TextDecoration.Underline
-                        ),
-                        onClick = {navigateToLogin()}
-                    )
-                }
+               Text(
+                  text = "Sudah punya akun?",
+                  style = MaterialTheme.typography.bodyMedium.copy(
+                     color = Sky900,
+                     fontSize = 14.sp,
+                     lineHeight = 20.sp,
+                     fontWeight = FontWeight.Light
+                  ),
+               )
+               ClickableText(
+                  text = AnnotatedString("Masuk"),
+                  modifier = Modifier.padding(start = 4.dp),
+                  style = MaterialTheme.typography.bodyMedium.copy(
+                     color = Sky900,
+                     fontSize = 14.sp,
+                     lineHeight = 20.sp,
+                     fontWeight = FontWeight.SemiBold,
+                     textDecoration = TextDecoration.Underline
+                  ),
+                  onClick = { navigateToLogin() }
+               )
             }
-        }
-    }
+         }
+      }
+   }
 }
 
 // preview
 @Preview(showBackground = true)
 @Composable
 fun StartScreenPreview() {
-    JournalingTheme {
-        StartScreen(navController = NavController(LocalContext.current))
-    }
+   JournalingTheme {
+      StartScreen(navController = NavController(LocalContext.current))
+   }
 }

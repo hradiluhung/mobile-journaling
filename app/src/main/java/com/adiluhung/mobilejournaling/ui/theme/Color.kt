@@ -15,7 +15,10 @@ val Slate900 = Color(0xFF1C222B)
 val Slate300 = Color(0xFFAFBACA)
 
 val Sky900 = Color(0xFF033F6B)
+val Sky700 = Color(0xFF1177C0)
 val Sky500 = Color(0xFF2497EB)
+val Sky300 = Color(0xFF6AC9FF)
+val Sky100 = Color(0xFFC2E6FF)
 val Sky50 = Color(0xFFE4F4FF)
 
 val Blue700 = Color(0xFF34B7E1)
@@ -24,3 +27,4 @@ val Blue900 = Color(0xFF0071AC)
 val Gold25 = Color(0xFFFFFAF1)
 
 val Yellow400 = Color(0xFFFFCD8D)
+val Yellow900 = Color(0xFF956E2D)

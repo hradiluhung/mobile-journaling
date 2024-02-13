@@ -19,57 +19,46 @@ import com.adiluhung.mobilejournaling.ui.theme.Sky900
 
 @Composable
 fun BottomNavbar(navController: NavController) {
-    val navItems = listOf(
-        NavItem.Home,
-        NavItem.Mood,
-        NavItem.Program,
-        NavItem.Profile,
-    )
+   val navItems = listOf(
+      NavItem.Home,
+      NavItem.Mood,
+      NavItem.Program,
+      NavItem.Favorites,
+      NavItem.Profile,
+   )
 
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
+   val navBackStackEntry by navController.currentBackStackEntryAsState()
+   val currentRoute = navBackStackEntry?.destination?.route
 
-    val context = LocalContext.current
+   NavigationBar(
+      containerColor = Color.White, contentColor = Sky900
+   ) {
+      navItems.forEach { item ->
+         NavigationBarItem(
+            selected = currentRoute == item.route,
+            onClick = {
+               navController.navigate(item.route) {
+                  navController.graph.startDestinationRoute?.let { screen_route ->
+                     popUpTo(screen_route) {
+                        saveState = true
+                     }
+                  }
+                  launchSingleTop = true
+                  restoreState = true
+               }
 
-    NavigationBar(
-        containerColor = Color.White,
-        contentColor = Sky900
-    ) {
-        navItems.forEach { item ->
-            NavigationBarItem(
-                selected = currentRoute == item.route,
-                onClick = {
-                    navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
-                },
-                icon = {
-                    if(currentRoute == item.route){
-                        Icon(
-                            modifier = Modifier
-                                .width(28.dp)
-                                .height(28.dp),
-                            painter = painterResource(id = item.activeIcon),
-                            contentDescription = item.title
-                        )
-                    } else {
-                        Icon(
-                            modifier = Modifier
-                                .width(28.dp)
-                                .height(28.dp),
-                            painter = painterResource(id = item.icon),
-                            contentDescription = item.title
-                        )
-                    }
-                },
-                label = null,
-            )
-        }
-    }
+            },
+            icon = {
+               Icon(
+                  modifier = Modifier
+                     .width(28.dp)
+                     .height(28.dp),
+                  painter = painterResource(id = item.icon),
+                  contentDescription = item.title
+               )
+            },
+            label = null,
+         )
+      }
+   }
 }

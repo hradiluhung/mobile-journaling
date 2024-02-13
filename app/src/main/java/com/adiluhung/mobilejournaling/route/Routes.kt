@@ -1,18 +1,46 @@
 package com.adiluhung.mobilejournaling.route
 
 sealed class Routes(val route: String) {
-    // unauthenticated
-    object Login : Routes("login")
-    object Register : Routes("register")
-    object Start : Routes("start")
+   // common
+   data object Loading : Routes("loading")
+   data object CompleteProfile : Routes("completeProfile")
 
-    // authenticated
-    object Home : Routes("home")
-    object Mood : Routes("mood")
-    object Program: Routes("program")
-    object Profile : Routes("profile")
+   // unauthenticated
+   data object Login : Routes("login")
+   data object Register : Routes("register")
+   data object Start : Routes("start")
 
-    object DetailProgram: Routes("detailProgram/{id}") {
-        fun createRoute(id: Int) = "detailProgram/$id"
-    }
+   // authenticated
+   data object Home : Routes("home")
+   data object ListMood : Routes("listMood")
+   data object ListProgram : Routes("listProgram")
+   data object Favorites : Routes("Favorites")
+   data object Profile : Routes("profile")
+
+   data object DetailProgram : Routes("detailProgram/{programId}") {
+      fun createRoute(programId: Int) = "detailProgram/$programId"
+   }
+
+   data object DetailSession : Routes("detailSession/{sessionId}") {
+      fun createRoute(sessionId: Int) = "detailSession/$sessionId"
+   }
+
+   data object MoodCheckIn : Routes("moodCheckIn")
+
+
+   data object MoodAddNote : Routes("moodAddNote/{moodId}") {
+      fun createRoute(moodId: Int) = "moodAddNote/$moodId"
+   }
+
+   data object AdvancedListMood : Routes("advancedListMood")
+
+   data object PersonalInfo : Routes("personalInfo")
+
+   data object AccountInfo : Routes("accountInfo")
+
+   data object Reminder : Routes("reminder")
+
+   data object SessionComplete : Routes("sessionComplete/{sessionId}") {
+      fun createRoute(sessionId: Int) = "sessionComplete/$sessionId"
+   }
 }

@@ -1,6 +1,7 @@
 plugins {
    id("com.android.application")
    id("org.jetbrains.kotlin.android")
+   // id("com.google.devtools.ksp")
 }
 
 android {
@@ -18,6 +19,8 @@ android {
       vectorDrawables {
          useSupportLibrary = true
       }
+
+      buildConfigField("String", "BASE_URL", "\"https://meditate.apps.webku.xyz/api/\"")
    }
 
    buildTypes {
@@ -38,6 +41,7 @@ android {
    }
    buildFeatures {
       compose = true
+      buildConfig = true
    }
    composeOptions {
       kotlinCompilerExtensionVersion = "1.5.1"
@@ -71,10 +75,37 @@ dependencies {
    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
    // Livedata
-   implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+   implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 
    // Compose Navigation
    implementation("androidx.navigation:navigation-compose:2.7.6")
    implementation("androidx.navigation:navigation-runtime-ktx:2.7.6")
+
+   // Retrofit
+   implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
+   implementation("com.squareup.retrofit2:retrofit:2.9.0")
+   implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+   // Image
+   implementation("io.coil-kt:coil-compose:2.5.0")
+
+   // Constraint Layout
+   implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
+   // ExoPlayer
+   implementation("com.google.android.exoplayer:exoplayer:2.19.1")
+
+   // permission lib. must match with compose version
+   implementation("com.google.accompanist:accompanist-permissions:0.25.1")
+
+   // Room
+   // implementation ("androidx.room:room-runtime:$2.5.1")
+   // implementation( "androidx.room:room-ktx:$2.5.1")
+
+   // Permission
+   implementation("com.google.accompanist:accompanist-permissions:0.25.1")
+
+   // System UI Controller
+   implementation("androidx.media3:media3-exoplayer:1.2.1")
 }
