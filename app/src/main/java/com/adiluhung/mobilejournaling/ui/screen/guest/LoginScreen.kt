@@ -1,7 +1,7 @@
 package com.adiluhung.mobilejournaling.ui.screen.guest
 
-import android.util.Log
 import android.widget.Toast
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -48,7 +50,7 @@ import com.adiluhung.mobilejournaling.ui.components.buttons.FilledButton
 import com.adiluhung.mobilejournaling.ui.components.inputs.CustomTextField
 import com.adiluhung.mobilejournaling.ui.theme.JournalingTheme
 import com.adiluhung.mobilejournaling.ui.theme.Sky900
-import com.adiluhung.mobilejournaling.ui.utils.validateEmail
+import com.adiluhung.mobilejournaling.ui.utils.rememberImeState
 import com.adiluhung.mobilejournaling.ui.utils.validateForm
 
 @Composable
@@ -62,6 +64,16 @@ fun LoginScreen(
    var password by remember { mutableStateOf("") }
    var isLoadingSubmit by remember { mutableStateOf(false) }
    val context = LocalContext.current
+
+   val imeState = rememberImeState()
+   val scrollState = rememberScrollState()
+
+   LaunchedEffect(key1 = imeState.value) {
+      if (imeState.value){
+         scrollState.animateScrollTo(scrollState.maxValue, tween(300))
+      }
+   }
+
 
    LaunchedEffect(Unit) {
       viewModel
@@ -116,12 +128,14 @@ fun LoginScreen(
       })
    {
       Column(
-         modifier = Modifier.padding(
-            top = 12.dp,
-            start = 12.dp,
-            end = 12.dp,
-            bottom = 12.dp
-         )
+         modifier = Modifier
+            .padding(
+               top = 12.dp,
+               start = 12.dp,
+               end = 12.dp,
+               bottom = 12.dp
+            )
+            .verticalScroll(scrollState)
       ) {
          Row(modifier = Modifier.padding(top = 48.dp)) {
             IconButton(

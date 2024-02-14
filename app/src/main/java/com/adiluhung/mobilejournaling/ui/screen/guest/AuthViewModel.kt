@@ -45,6 +45,7 @@ class AuthViewModel(private val pref: UserPreferences) : ViewModel() {
                   _uiState.value = UiState.Success(data.message)
                   sendMessage(data.message)
 
+                  updateCompleteProfile(true)
                   viewModelScope.launch {
                      data.data.token.let { pref.saveUserToken(it) }
                   }

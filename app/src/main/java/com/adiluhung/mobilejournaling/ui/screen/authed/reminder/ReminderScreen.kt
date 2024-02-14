@@ -171,8 +171,8 @@ fun ReminderScreen(
       var time by remember { mutableStateOf(alarmTime ?: "") }
 
       val stateTimePicker = rememberTimePickerState(
-         initialHour = time.substringBefore(":").toInt(),
-         initialMinute = time.substringAfter(":").toInt()
+         initialHour = if (time != "") time.substringBefore(":").toInt() else 0,
+         initialMinute = if (time != "") time.substringAfter(":").toInt() else 0,
       )
 
       val alarmScheduler: AlarmScheduler = AlarmSchedulerImpl(context)
@@ -190,6 +190,7 @@ fun ReminderScreen(
             alarmItem = AlarmItem(
                alarmTime = calendar,
                message = "Waktunya meditasi"
+
             )
             alarmItem?.let(alarmScheduler::schedule)
 

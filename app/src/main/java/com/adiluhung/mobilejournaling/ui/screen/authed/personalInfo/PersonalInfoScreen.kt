@@ -1,6 +1,7 @@
 package com.adiluhung.mobilejournaling.ui.screen.authed.personalInfo
 
 import android.widget.Toast
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,8 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Icon
@@ -38,10 +41,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.adiluhung.mobilejournaling.R
-import com.adiluhung.mobilejournaling.route.Routes
 import com.adiluhung.mobilejournaling.ui.ViewModelFactory
 import com.adiluhung.mobilejournaling.ui.common.UiState
 import com.adiluhung.mobilejournaling.ui.components.buttons.FilledButton
@@ -50,6 +53,7 @@ import com.adiluhung.mobilejournaling.ui.components.inputs.CustomTextField
 import com.adiluhung.mobilejournaling.ui.components.loadingEffect.shimmerBrush
 import com.adiluhung.mobilejournaling.ui.theme.JournalingTheme
 import com.adiluhung.mobilejournaling.ui.theme.Sky900
+import com.adiluhung.mobilejournaling.ui.utils.rememberImeState
 
 @Composable
 fun PersonalInfoScreen(
@@ -62,6 +66,16 @@ fun PersonalInfoScreen(
    var isLoadingSubmit by remember { mutableStateOf(false) }
 
    val context = LocalContext.current
+
+   val imeState = rememberImeState()
+   val scrollState = rememberScrollState()
+
+   LaunchedEffect(key1 = imeState.value) {
+      if (imeState.value) {
+         scrollState.animateScrollTo(scrollState.maxValue, tween(300))
+      }
+   }
+
 
    viewModel.updateState.observeAsState().value.let { uiState ->
       when (uiState) {
@@ -102,7 +116,12 @@ fun PersonalInfoScreen(
             .imePadding()
       })
    {
-      Column(modifier = Modifier.padding(top = 36.dp, start = 12.dp, end = 12.dp, bottom = 12.dp)) {
+      Column(
+         modifier =
+         Modifier
+            .padding(top = 36.dp, start = 12.dp, end = 12.dp, bottom = 12.dp)
+            .verticalScroll(scrollState)
+      ) {
          Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -115,13 +134,15 @@ fun PersonalInfoScreen(
                Icon(
                   imageVector = Icons.Default.KeyboardArrowLeft,
                   contentDescription = null,
-                  tint = Sky900
+                  tint = Sky900,
+                  modifier = Modifier.size(28.dp)
                )
             }
             Text(
                text = "Informasi Pribadi",
                style = MaterialTheme.typography.displaySmall.copy(
-                  color = Sky900
+                  color = Sky900,
+                  fontSize = 20.sp
                ),
             )
 

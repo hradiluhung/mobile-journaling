@@ -1,6 +1,7 @@
 package com.adiluhung.mobilejournaling
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -13,6 +14,7 @@ import androidx.core.app.NotificationManagerCompat
 import kotlin.random.Random
 
 class AlarmReceiver : BroadcastReceiver() {
+   @SuppressLint("MissingPermission")
    override fun onReceive(context: Context?, intent: Intent?) {
       // val message = intent?.getStringExtra("EXTRA_MESSAGE") ?: return
       //
@@ -35,13 +37,7 @@ class AlarmReceiver : BroadcastReceiver() {
          .setContentIntent(pendingIntent)
 
       val notificationManager = NotificationManagerCompat.from(context)
-      if (ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.POST_NOTIFICATIONS
-         ) != PackageManager.PERMISSION_GRANTED
-      ) {
-         return
-      }
+
       notificationManager.notify(123, builder.build())
    }
 

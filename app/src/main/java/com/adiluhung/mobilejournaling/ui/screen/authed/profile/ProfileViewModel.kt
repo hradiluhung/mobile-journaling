@@ -2,6 +2,7 @@ package com.adiluhung.mobilejournaling.ui.screen.authed.profile
 
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -31,6 +32,8 @@ class ProfileViewModel(private val pref: UserPreferences) : ViewModel() {
          .map { token -> token }
          .first()
    }
+   private val _alarmTime = MutableLiveData<String?>()
+   val alarmTime: LiveData<String?> = _alarmTime
 
    private val _userData = MutableLiveData<UiState<GetUserProfileResponse>>(UiState.Empty)
    val userData: MutableLiveData<UiState<GetUserProfileResponse>>
@@ -123,8 +126,18 @@ class ProfileViewModel(private val pref: UserPreferences) : ViewModel() {
       })
    }
 
+   private fun getAlarm() {
+      viewModelScope.launch {
+         pref.getAlarm().collect { alarm ->
+            _alarmTime.value = alarm
+            Log.d("ReminderViewModel", "Alarm time: $alarm")
+         }
+      }
+   }
+
    init {
       getProfileUser()
+      getAlarm()
    }
 
 }

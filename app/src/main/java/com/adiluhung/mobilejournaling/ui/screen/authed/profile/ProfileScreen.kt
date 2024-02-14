@@ -84,6 +84,9 @@ fun ProfileScreen(
    var isLoadingInit by remember { mutableStateOf(true) }
    var userData by remember { mutableStateOf<DataProfile?>(null) }
    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+   val alarmTime = viewModel.alarmTime.observeAsState().value
+   var time by remember { mutableStateOf(alarmTime ?: "") }
+
    val galleryLauncher =
       rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
          // process eith the received image uri
@@ -323,7 +326,7 @@ fun ProfileScreen(
                         .weight(1f),
                   ) {
                      Text(
-                        text = "Mulai rutinitas dengan",
+                        text = if(time== "") "Mulai rutinitas dengan" else "Pengingat aktif pukul",
                         style = MaterialTheme.typography.bodyMedium.copy(
                            fontWeight = FontWeight.Light,
                            fontSize = 14.sp,
@@ -332,7 +335,7 @@ fun ProfileScreen(
                         color = Sky900
                      )
                      Text(
-                        text = "Pengingat",
+                        text = if(time == "") "Pengingat" else time,
                         style = MaterialTheme.typography.bodyMedium.copy(
                            fontWeight = FontWeight.Medium,
                            fontSize = 16.sp,
