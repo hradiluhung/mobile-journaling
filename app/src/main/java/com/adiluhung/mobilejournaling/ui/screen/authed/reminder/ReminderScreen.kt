@@ -73,7 +73,6 @@ fun ReminderScreen(
 
    val alarmTime = viewModel.alarmTime.observeAsState().value
    var showTimePicker by remember { mutableStateOf(false) }
-   val stateTimePicker = rememberTimePickerState()
    var isLoadingSubmit by remember { mutableStateOf(false) }
    var context = LocalContext.current
 
@@ -171,8 +170,14 @@ fun ReminderScreen(
       var isChecked by remember { mutableStateOf(alarmTime != "") }
       var time by remember { mutableStateOf(alarmTime ?: "") }
 
+      val stateTimePicker = rememberTimePickerState(
+         initialHour = time.substringBefore(":").toInt(),
+         initialMinute = time.substringAfter(":").toInt()
+      )
+
       val alarmScheduler: AlarmScheduler = AlarmSchedulerImpl(context)
       var alarmItem: AlarmItem? = null
+
 
       fun onUpdateReminder() {
          val calendar: Calendar = Calendar.getInstance().apply {

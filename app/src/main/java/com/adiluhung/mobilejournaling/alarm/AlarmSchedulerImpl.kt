@@ -19,16 +19,20 @@ class AlarmSchedulerImpl(
          putExtra("EXTRA_MESSAGE", alarmItem.message)
       }
       val alarmTime = alarmItem.alarmTime.timeInMillis
-      alarmManager.setInexactRepeating(
+
+      // Log.d("AlarmSchedulerImpl", "schedule: $alarmTime")
+
+      val pendingIntent = PendingIntent.getBroadcast(
+         context,
+         0,
+         intent,
+         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+      )
+
+      alarmManager.setExactAndAllowWhileIdle(
          AlarmManager.RTC_WAKEUP,
          alarmTime,
-         AlarmManager.INTERVAL_DAY,
-         PendingIntent.getBroadcast(
-            context,
-            alarmItem.hashCode(),
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-         )
+         pendingIntent
       )
    }
 
@@ -36,7 +40,7 @@ class AlarmSchedulerImpl(
       alarmManager.cancel(
          PendingIntent.getBroadcast(
             context,
-            alarmItem.hashCode(),
+            0,
             Intent(context, AlarmReceiver::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
          )
