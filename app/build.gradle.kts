@@ -20,7 +20,7 @@ android {
          useSupportLibrary = true
       }
 
-      buildConfigField("String", "BASE_URL", "\"https://meditate.apps.webku.xyz/api/\"")
+      buildConfigField("String", "BASE_URL", "\"https://meditate-new.apps.webku.xyz/api/\"")
    }
 
    buildTypes {
